@@ -6,7 +6,7 @@ highlighting in the Word file.
 """
 import docx, re, json, csv, sys, unicodedata, difflib, collections
 
-SRC = "מפתח אלוני ללא מובאות.docx"
+SRC = "private/sources/מפתח אלוני ללא מובאות.docx"   # not in the repository
 NIQQUD = re.compile(r"[֑-ׇ]")
 DASH = r"(?:--|–|—|-)"
 SEE = re.compile(r"(?:^|\s|;|\.|" + DASH + r")\s*(ראו גם|ר' גם|וראו גם|ראו|ראה גם|ראה)\s*:?\s*")

@@ -59,6 +59,6 @@ python3 scripts/build_xlsx.py
 python3 scripts/build_table_page.py
 ```
 
-The parsing scripts (`parse_fgp.py`, `parse_allony.py`) need the source files, which are not included. `match_pgp.py` takes the path to a downloaded copy of the Princeton `documents.csv`.
+The parsing scripts (`parse_fgp.py`, `parse_allony.py`) need the source files, which are not included; they expect them in a local, git-ignored `private/sources/` folder. `match_pgp.py` takes the path to a downloaded copy of the Princeton `documents.csv`.
 
 To correct a classification, edit `classification` in `data/allony_index.json` (the build scripts read that file), then rebuild.
