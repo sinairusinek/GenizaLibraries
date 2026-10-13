@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="The index to Allony's Genizah book lists, classed by Friedberg Genizah Project field, with the book lists and comparison charts.">
+<title>Allony Index Classified</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=IBM+Plex+Sans+Hebrew:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+/* Layout: one-screen ledger. A slim masthead and filter bar, then a single scrolling table whose head row stays pinned. */
+:root {
+  --paper: #f7f6f2; --sheet: #ffffff; --ink: #1d2230; --muted: #626a7a; --rule: #dcdad2; --head: #ecebe4;
+  --accent: #1f5aad; --mark: #fff3b0; --flag: #c62828;
+  --display: "Frank Ruhl Libre", "IBM Plex Sans Hebrew", Georgia, serif;
+  --body: "IBM Plex Sans", "IBM Plex Sans Hebrew", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #14171d; --sheet: #1b1f27; --ink: #e7e9ee; --muted: #9aa2b1; --rule: #313744; --head: #232833; --accent: #7fb0f2; --mark: #5c5200; --flag: #ff6b6b; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #14171d; --sheet: #1b1f27; --ink: #e7e9ee; --muted: #9aa2b1; --rule: #313744; --head: #232833; --accent: #7fb0f2; --mark: #5c5200; --flag: #ff6b6b; color-scheme: dark }
+html, body { height: 100%; }
+body { background: var(--paper); color: var(--ink); font: 14px/1.4 var(--body); display: flex; flex-direction: column; padding-inline: 16px; padding-block: 12px; box-sizing: border-box; gap: 10px; }
+header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; }
+h1 { font: 700 22px/1.2 var(--display); margin: 0; text-wrap: balance; }
+header p { margin: 0; color: var(--muted); font-size: 13px; }
+.bar { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; }
+.bar label { font-size: 12px; color: var(--muted); display: flex; gap: 6px; align-items: center; }
+.bar input[type=search], .bar select { font: inherit; color: var(--ink); background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px; padding: 5px 8px; min-width: 0; }
+.bar input[type=search] { width: 15em; max-width: 100%; }
+.bar button { font: inherit; color: var(--ink); background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px; padding: 5px 10px; cursor: pointer; }
+.bar button[aria-pressed=true] { background: var(--accent); border-color: var(--accent); color: var(--sheet); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.bar a.btn { font: inherit; color: var(--ink); background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px; padding: 5px 10px; text-decoration: none; }
+#count { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; margin-inline-start: auto; }
+.wrap { flex: 1; min-height: 0; overflow: auto; background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px; }
+table { border-collapse: separate; border-spacing: 0; width: 100%; min-width: 1250px; font-size: 13px; }
+thead th { position: sticky; top: 0; z-index: 2; background: var(--head); text-align: start; font-weight: 600; font-size: 11.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--rule); padding: 0; white-space: nowrap; }
+thead button { all: unset; box-sizing: border-box; display: block; width: 100%; padding: 8px 8px; cursor: pointer; }
+thead button:hover, thead th[aria-sort] button { color: var(--ink); }
+thead button::after { content: " ↕"; opacity: .35; }
+thead th[aria-sort=ascending] button::after { content: " ↑"; opacity: 1; color: var(--accent); }
+thead th[aria-sort=descending] button::after { content: " ↓"; opacity: 1; color: var(--accent); }
+thead th.plain { padding: 8px; }
+td { padding: 4px 8px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+td.n { text-align: end; font-variant-numeric: tabular-nums; color: var(--muted); white-space: nowrap; }
+td.he { direction: rtl; text-align: right; font-family: "IBM Plex Sans Hebrew", var(--body); }
+td.entry { font-size: 14px; min-width: 14em; }
+td.entry small { display: block; color: var(--muted); font-size: 12px; }
+tr.hl td.entry { background: var(--mark); }
+td.cls { padding: 0; min-width: 9.5em; }
+td.cls span { display: block; padding: 4px 8px; height: 100%; direction: rtl; text-align: center; font-family: "IBM Plex Sans Hebrew", var(--body); font-size: 12.5px; }
+td.conf { text-align: center; font-weight: 600; }
+td.conf.L { color: var(--muted); font-weight: 400; }
+td.refs { color: var(--muted); font-size: 12px; max-width: 22em; font-variant-numeric: tabular-nums; }
+td.note { color: var(--muted); font-size: 12px; min-width: 12em; max-width: 20em; }
+td.type { white-space: nowrap; color: var(--muted); }
+
+.main { flex: 1; min-height: 0; display: flex; gap: 10px; position: relative; }
+.main .wrap { flex: 1; min-width: 0; }
+aside { flex: 0 0 370px; max-width: 100%; overflow: auto; background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px; padding: 14px 16px 20px; box-sizing: border-box; font-size: 13px; line-height: 1.5; }
+aside h2 { font: 700 17px/1.25 var(--display); margin: 0 0 6px; text-wrap: balance; }
+aside h3 { font: 600 11.5px/1.3 var(--body); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); margin: 18px 0 6px; }
+aside p { margin: 0 0 8px; }
+aside ul { margin: 0 0 8px; padding-inline-start: 18px; display: grid; gap: 5px; }
+aside dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; }
+aside dt { font-weight: 600; white-space: nowrap; }
+aside dd { margin: 0; }
+aside bdi { font-family: "IBM Plex Sans Hebrew", var(--body); }
+aside .lead { color: var(--muted); }
+aside .close { float: inline-end; font: inherit; color: var(--muted); background: none; border: 1px solid var(--rule); border-radius: 4px; padding: 2px 8px; cursor: pointer; margin-inline-start: 8px; }
+@media (max-width: 900px) { aside { position: absolute; inset: 0; z-index: 3; flex-basis: auto; } }
+
+.tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+.tabs button { font: 600 13px/1 var(--body); color: var(--muted); background: none; border: 1px solid transparent; border-bottom: 2px solid transparent; padding: 7px 10px; cursor: pointer; }
+.tabs button[aria-selected=true] { color: var(--ink); border-bottom-color: var(--accent); }
+td.pgp { color: var(--muted); font-size: 12px; min-width: 22em; max-width: 34em; }
+td.sm { white-space: nowrap; }
+td.sm a { color: var(--accent); }
+td.desc { min-width: 16em; }
+td.date, td.place { min-width: 9em; max-width: 20em; font-size: 12.5px; }
+
+.ov { padding: 16px 18px 28px; box-sizing: border-box; }
+.ov h2 { font: 700 18px/1.25 var(--display); margin: 0 0 4px; text-wrap: balance; }
+.ov h3 { font: 600 12px/1.3 var(--body); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); margin: 26px 0 10px; }
+.ov p { margin: 0 0 12px; color: var(--muted); max-width: 70ch; font-size: 13px; }
+.pair { display: flex; flex-wrap: wrap; gap: 20px 36px; align-items: flex-start; }
+.pair figure { margin: 0; flex: 1 1 260px; max-width: 340px; min-width: 0; }
+.pair figure.alluvial { flex: 3 1 560px; max-width: 940px; }
+.alluwrap { overflow-x: auto; }
+.alluhost { min-width: 660px; }
+.alluhost text { font-family: "IBM Plex Sans Hebrew", var(--body); }
+.pair figcaption { font-weight: 600; margin-bottom: 2px; }
+.pair figure small { display: block; color: var(--muted); font-size: 12px; margin-bottom: 8px; }
+.pair svg, .mini svg { display: block; width: 100%; height: auto; }
+.keywrap { flex: 1 1 300px; min-width: 0; overflow-x: auto; }
+table.key { min-width: 0; width: 100%; font-size: 12.5px; border-collapse: collapse; }
+table.key th { position: static; background: none; text-transform: none; letter-spacing: 0; font-size: 12px; padding: 3px 6px; text-align: end; border-bottom: 1px solid var(--rule); }
+table.key th:first-child { text-align: start; }
+table.key td { padding: 3px 6px; border-bottom: 1px solid var(--rule); vertical-align: middle; }
+table.key td.num { text-align: end; font-variant-numeric: tabular-nums; white-space: nowrap; }
+table.key .sw { display: inline-block; width: 12px; height: 12px; border-radius: 2px; margin-inline-end: 7px; vertical-align: -1px; }
+table.key .nm { font-family: "IBM Plex Sans Hebrew", var(--body); }
+.minis { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 16px 12px; }
+.mini { margin: 0; min-width: 0; }
+.mini figcaption { font-size: 11.5px; line-height: 1.3; margin-top: 5px; text-align: center; overflow-wrap: anywhere; }
+.mini figcaption b { font-weight: 600; }
+.mini figcaption span { color: var(--muted); display: block; }
+#tip { position: fixed; z-index: 20; pointer-events: none; background: var(--ink); color: var(--paper); font-size: 12px; padding: 5px 8px; border-radius: 4px; max-width: 260px; }
+.ovbar { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; margin-bottom: 14px; font-size: 12px; color: var(--muted); }
+.ovbar select { font: inherit; color: var(--ink); background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px; padding: 4px 8px; }
+
+.mini path, .mini circle[data-code] { cursor: pointer; }
+.mini figcaption button { all: unset; cursor: pointer; display: block; width: 100%; text-align: center; }
+.mini figcaption button:hover b, .mini figcaption button:focus-visible b { text-decoration: underline; }
+.mini.sel { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
+#detail .chips { display: flex; flex-wrap: wrap; gap: 5px; margin: 10px 0 12px; }
+#detail .chips button { font: inherit; font-size: 12px; color: var(--ink); background: var(--sheet); border: 1px solid var(--rule); border-radius: 12px; padding: 2px 9px 2px 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
+#detail .chips button[aria-pressed=true] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+#detail .chips i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+#detail .chips bdi, #detail .he { font-family: "IBM Plex Sans Hebrew", var(--body); }
+#detail dl.meta { font-size: 12.5px; margin-bottom: 4px; }
+#detail ol { list-style: none; margin: 0; padding: 0; }
+#detail ol li { border-top: 1px solid var(--rule); padding: 7px 0; display: grid; gap: 3px; }
+#detail .hw { direction: rtl; text-align: right; font-size: 14px; }
+#detail .hw small { display: block; color: var(--muted); font-size: 12px; }
+#detail .cl { display: inline-block; padding: 1px 7px; border-radius: 3px; font-size: 12px; direction: rtl; }
+#detail .ln { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Allony index, classed by FGP field</h1>
+  <p>3,365 entries of the index to Allony's Genizah book lists, each with a suggested Friedberg Genizah Project class. Suggestions only, not checked against the lists.</p>
+</header>
+<div class="tabs" role="tablist">
+  <button type="button" role="tab" id="tab-overview" aria-selected="true">Overview</button>
+  <button type="button" role="tab" id="tab-talmud" aria-selected="false">Talmud and halakha</button>
+  <button type="button" role="tab" id="tab-entries" aria-selected="false">Index entries (3,365)</button>
+  <button type="button" role="tab" id="tab-lists" aria-selected="false">Book lists (114)</button>
+</div>
+<div class="bar">
+  <label class="tonly">Search <input type="search" id="q" placeholder="search this table"></label>
+  <label class="eonly">Type <select id="type"><option value="">all types</option><option>work</option><option>author</option><option>person</option><option>object/term</option><option>place/group</option><option>other</option></select></label>
+  <label class="eonly">Confidence <select id="conf"><option value="">any</option><option value="H">high</option><option value="M">medium</option><option value="L">low</option></select></label>
+  <button type="button" id="classed" class="eonly" aria-pressed="false">Classed entries only</button>
+  <a id="dlbtn" class="btn" href="allony_data.xlsx" download>Download the data (Excel)</a>
+  <button type="button" id="howbtn" class="eonly" aria-pressed="false" aria-controls="how">How entries were classed</button>
+  <span id="count" class="tonly"></span>
+</div>
+<div class="main">
+<div class="wrap ov" tabindex="0" id="wrap-overview">
+  <h2>What the Genizah holds and what the book lists name</h2>
+  <p>The diagram uses the 22 top-level fields of the Friedberg Genizah Project and the same colours as the tables. The left side counts surviving fragments. The right side counts how often works of each field are named in the 114 book lists, using the suggested classes.</p>
+  <div class="ovbar"><label for="fgpm">Friedberg measure</label><select id="fgpm"><option value="1">shelf numbers</option><option value="2">units</option></select></div>
+  <div class="pair">
+    <figure class="alluvial"><figcaption>Share of each field: Genizah fragments on the left, book-list mentions on the right</figcaption><small>A band that widens to the right is a field the lists name more than the Genizah preserves; one that narrows is preserved more than it is named.</small><div class="alluwrap"><div id="alluvial" class="alluhost"></div></div></figure>
+    <div class="keywrap"><table class="key"><thead><tr><th>Field</th><th>Friedberg</th><th>Book lists</th></tr></thead><tbody id="key"></tbody></table></div>
+  </div>
+  <div id="minis"></div>
+</div>
+<div class="wrap ov" tabindex="0" id="wrap-talmud" hidden>
+  <h2>Talmud and halakha: fragments in the Genizah against works named in the lists</h2>
+  <p>This view keeps only two Friedberg fields, rabbinic literature and halakhic literature with Talmud commentary, and breaks them into their sub-fields. Halakha is split one level further, so that Alfasi, the Geonim and the Mishneh Torah show separately. Percentages are shares within these two fields, not of the whole Genizah or of all mentions.</p>
+  <div class="ovbar"><label for="fgpm-t">Friedberg measure</label><select id="fgpm-t"><option value="1">shelf numbers</option><option value="2">units</option></select></div>
+  <div class="pair">
+    <figure class="alluvial"><figcaption>Share of each field: Genizah fragments on the left, book-list mentions on the right</figcaption><small>A band that widens to the right is a field the lists name more than the Genizah preserves; one that narrows is preserved more than it is named.</small><div class="alluwrap"><div id="alluvial-t" class="alluhost"></div></div></figure>
+    <div class="keywrap"><table class="key"><thead><tr><th>Sub-field</th><th>Friedberg</th><th>Book lists</th></tr></thead><tbody id="key-t"></tbody></table></div>
+  </div>
+  <div id="minis-t"></div>
+</div>
+<div class="wrap" tabindex="0" id="wrap-entries" hidden>
+<table data-t="e">
+  <thead><tr>
+    <th data-k="id"><button type="button">No.</button></th>
+    <th data-k="entry"><button type="button">Index entry</button></th>
+    <th data-k="type"><button type="button">Type</button></th>
+    <th data-k="genre"><button type="button">Field</button></th>
+    <th data-k="genre"><button type="button">Sub-field</button></th>
+    <th data-k="genre"><button type="button">Sub-sub-field</button></th>
+    <th data-k="conf"><button type="button">Conf.</button></th>
+    <th data-k="lists"><button type="button">Lists</button></th>
+    <th data-k="refs"><button type="button">Refs</button></th>
+    <th data-k="author"><button type="button">Attributed to</button></th>
+    <th class="plain">References (list: lines)</th>
+    <th class="plain">Cross-references</th>
+    <th class="plain">Note</th>
+  </tr></thead>
+  <tbody id="tb"></tbody>
+</table>
+</div>
+<div class="wrap" tabindex="0" id="wrap-lists" hidden>
+<table data-t="l">
+  <thead><tr>
+    <th data-k="no"><button type="button">No.</button></th>
+    <th data-k="sm"><button type="button">Shelfmark</button></th>
+    <th data-k="ltype"><button type="button">Type of list</button></th>
+    <th class="plain">Description in the book's contents</th>
+    <th data-k="page"><button type="button">Page</button></th>
+    <th data-k="year"><button type="button">Date: book contents</button></th>
+    <th data-k="year"><button type="button">Date: Princeton Geniza Project</button></th>
+    <th data-k="year"><button type="button">Date: inferred</button></th>
+    <th class="plain">Place: book contents</th>
+    <th class="plain">Place: Princeton Geniza Project</th>
+    <th class="plain">Place: inferred</th>
+    <th data-k="lents"><button type="button">Entries</button></th>
+    <th data-k="lrefs"><button type="button">Refs</button></th>
+    <th class="plain">Princeton Geniza Project description</th>
+  </tr></thead>
+  <tbody id="tbl"></tbody>
+</table>
+</div>
+<aside id="detail" hidden aria-label="Works named in this list">
+  <button type="button" class="close" id="detailclose">Close</button>
+  <h2 id="dtitle"></h2>
+  <dl class="meta" id="dmeta"></dl>
+  <div class="chips" id="dchips"></div>
+  <p class="lead" id="dcount"></p>
+  <ol id="dlist"></ol>
+</aside>
+<aside id="how" hidden aria-label="How entries were classed">
+  <button type="button" class="close" id="howclose">Close</button>
+  <h2>How entries were classed</h2>
+  <p class="lead">Every class here is a suggestion made from general knowledge of medieval Hebrew and Judaeo-Arabic literature. Nothing was checked against the book lists themselves.</p>
+
+  <h3>Procedure</h3>
+  <ul>
+    <li>Each index line was read whole: headword, Hebrew gloss, attributed author, the notes inside the references, and any cross-reference.</li>
+    <li>The 3,365 lines were classed in six batches under one written set of conventions, then merged and harmonised.</li>
+    <li>Two decisions per line: what kind of thing it is, and, for works, which FGP category fits.</li>
+  </ul>
+
+  <h3>Type of entry</h3>
+  <dl>
+    <dt>work</dt><dd>A title, a genre, or a text: a biblical book, a tractate, "commentary on X", "responsa". Always classed.</dd>
+    <dt>author</dt><dd>A name that stands for an author with no specific work. Classed only when the author's output falls in one field (Galen, Hayyuj); left blank for authors who span several (Saadia, Maimonides, Ibn Ghiyyat).</dd>
+    <dt>person</dt><dd>Owner, buyer, seller, scribe, official, relative, biblical figure. Not classed.</dd>
+    <dt>object/term</dt><dd>Binding, quire, volume, copy, paper, script, Torah ornaments, measures. Not classed.</dd>
+    <dt>place/group</dt><dd>Not classed.</dd>
+    <dt>other</dt><dd>Unclear lines, and three wrapped lines that continue the entry above them.</dd>
+  </dl>
+
+  <h3>Choosing the category</h3>
+  <ul>
+    <li>The deepest category that can be justified is used, never a parent when a child fits.</li>
+    <li>When the sub-class is simply unknown, the entry goes to that level's "not defined" residue (<bdi>לא הוגדר</bdi>), as FGP itself does.</li>
+    <li>A parent with no sub-field is used only when one entry spans several children, for example a tractate whose references mix Mishnah, Bavli and Yerushalmi copies.</li>
+    <li><bdi>תחום לא נקבע</bdi> is kept for works whose subject is opaque (58 entries).</li>
+    <li>Non-Jewish scientific and philosophical works are classed by subject, not as <bdi>דתות אחרות</bdi>. That field holds only religious texts such as the Quran.</li>
+  </ul>
+
+  <h3>Confidence</h3>
+  <dl>
+    <dt>H</dt><dd>Title or author well known and the class unambiguous (1,463).</dd>
+    <dt>M</dt><dd>Probable (812).</dd>
+    <dt>L</dt><dd>A guess: unidentified title, or two fields equally defensible (332).</dd>
+  </dl>
+
+  <h3>Conventions by field</h3>
+  <ul>
+    <li><b>Bible.</b> A book or parasha name alone, codices and targum are <bdi>מקרא ותרגומים</bdi>. A <bdi>תפסיר</bdi>, <bdi>שרח</bdi> or <bdi>פירוש</bdi> of a biblical book is <bdi>פרשנות מקרא</bdi>. Saadia's Tafsir on a book is commentary at confidence M, since translation and commentary travel together.</li>
+    <li><b>Rabbinic literature.</b> A tractate name alone has no sub-field, unless a note says Mishnah or Talmud. Classical midrash (Rabbah, Tanhuma, Mekhilta, Sifra) is <bdi>מדרש</bdi>; later midrash, sermons and homilies are <bdi>מדרש מאוחר ודרשות</bdi>.</li>
+    <li><b>Commentary.</b> On a tractate: <bdi>פירושי תלמוד בבלי</bdi>. On the Mishnah: <bdi>פירושי משנה</bdi>.</li>
+    <li><b>Halakha by author.</b> Saadia; Shmuel ben Hofni; Alfasi and his commentators; other Geonim and geonic codes (Hai, Sherira, Halakhot Gedolot, Halakhot Pesukot, She'iltot); Mishneh Torah; Rishonim (Ibn Ghiyyat, Hananel, Nissim); Karaite law. Unknown authorship goes to the residue.</li>
+    <li><b>Commandments and responsa.</b> Books of commandments are <bdi>ספרי מצות</bdi> whoever wrote them. Responsa are split Geonim, Rishonim, Karaite, unknown. Introductions to the Talmud and works of method are <bdi>מבואות לתלמוד</bdi>.</li>
+    <li><b>Thought.</b> Kalam (Saadia's Amanat, al-Muqammis, Yusuf al-Basir); philosophy, Aristotelian or Neoplatonic where known; logic; ethics; Sufi; theology.</li>
+    <li><b>Sciences and occult.</b> Medicine, pharmacology, astronomy, mathematics and the calendar are <bdi>מדעים</bdi>. Astrology, magic, dream interpretation and geomancy are <bdi>חכמת הנסתר</bdi>.</li>
+    <li><b>Language.</b> Grammar, lexicography, masorah, vocalisation, and all glossaries (<bdi>אלפאט'</bdi>) whatever text they gloss.</li>
+    <li><b>Liturgy and poetry.</b> Prayer books and the Haggadah are <bdi>תפילה וברכות</bdi>; piyyut, selihot, kinot and azharot are <bdi>פיוט</bdi>; diwans are <bdi>שירת חול</bdi>; tales, maqamat and adab are <bdi>סיפורת וספרות יפה</bdi>.</li>
+    <li><b>Other.</b> Polemics; chronicles and geography; Sefer Yetzira and its commentaries under <bdi>קבלה</bdi>; letters and lists as genres under <bdi>מסמכים</bdi>.</li>
+  </ul>
+
+  <h3>Cross-references</h3>
+  <ul>
+    <li>A "see" entry is classed as what its own headword denotes.</li>
+    <li>When a pure "see" entry points to exactly one work and the two classes differed, the target's class was taken (32 entries). The note column records the earlier class.</li>
+  </ul>
+
+  <h3>Harmonised after merging</h3>
+  <ul>
+    <li>Glossaries moved to <bdi>חכמת הלשון</bdi> (33 entries).</li>
+    <li>Books of commandments by Saadia and Shmuel ben Hofni moved from halakha to <bdi>ספרי מצות</bdi> (2 entries).</li>
+    <li>One tractate (<bdi>גיטין</bdi>) aligned with the tractate rule.</li>
+  </ul>
+
+  <h3>Known inconsistencies</h3>
+  <ul>
+    <li>Ibn Ghiyyat's Siraj is halakha under its title but tractate commentary under <bdi>פירוש</bdi> headwords.</li>
+    <li>Polemical halakha (the fat-tail, the Sabbath lamp, Rabbanite and Karaite disputes) is split between <bdi>פולמוס</bdi> and <bdi>הלכה</bdi> on thin evidence.</li>
+    <li>Prosody and poetics sit partly in <bdi>חכמת הלשון</bdi> and partly in <bdi>שירת חול</bdi>.</li>
+    <li><bdi>מעמד</bdi> is classed as piyyut; prayer is defensible.</li>
+    <li>Other works of Shmuel ben Hofni that are theological rather than legal vary between kalam and his halakha category.</li>
+    <li>There is no FGP slot for commentary on midrash; those entries are low confidence.</li>
+  </ul>
+</aside>
+</div>
+<div id="tip" hidden></div>
+<script>
+const D = /*DATA*/;
+const cats = D.cats, rows = D.rows;
+// row: 0 id, 1 headword, 2 gloss, 3 author, 4 type, 5 code, 6 conf, 7 lists, 8 refs, 9 refstr, 10 xrefs, 11 note, 12 highlight
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const lvl = (code, n) => { const p = code.split('.'); return p.length >= n ? p.slice(0, n).join('.') : ''; };
+const cell = (code, n) => { const k = code && lvl(code, n); if (!k) return '<td class="cls"></td>'; const c = cats[k];
+  return `<td class="cls" title="${esc(k + ' · ' + c[4])}"><span style="background:${c[1]};color:${c[2]}">${esc(c[0])}</span></td>`; };
+const confRank = {H: 0, M: 1, L: 2, '': 3};
+const keys = {
+  id: r => r[0], entry: r => r[1].replace(/[֑-ׇ]/g, ''), type: r => r[4],
+  genre: r => r[5] ? cats[r[5]][3] : 9999, conf: r => confRank[r[6]], lists: r => r[7], refs: r => r[8], author: r => r[3] || '￿'
+};
+let sortK = 'id', dir = 1, onlyClassed = false, tab = 'o', lsortK = 'no', ldir = 1;
+const $ = id => document.getElementById(id);
+const lists = D.lists;
+const ECOLS = ['No.', 'Index entry', 'Type', 'Field', 'Sub-field', 'Sub-sub-field', 'Confidence', 'Lists', 'Refs', 'Attributed to', 'References', 'Cross-references', 'Note'];
+const LCOLS = ['No.', 'Shelfmark', 'Type of list', 'Description', 'Page', 'Date: book contents', 'Date: Princeton', 'Date: inferred', 'Place: book contents', 'Place: Princeton', 'Place: inferred', 'Entries', 'Refs', 'Princeton description'];
+const fcls = () => '', rowcls = (t, r, extra) => extra ? ` class="${extra}"` : '';
+const td = (t, r, c, cls, inner, title) => `<td data-c="${c}" class="${cls}"${title ? ` title="${esc(title)}"` : ''}>${inner}</td>`;
+function viewEntries() {
+  const q = $('q').value.trim().toLowerCase(), ty = $('type').value, cf = $('conf').value;
+  let out = rows.filter(r => (!ty || r[4] === ty) && (!cf || r[6] === cf) && (!onlyClassed || r[5]) &&
+    (!q || (r[1] + ' ' + r[2] + ' ' + r[3] + ' ' + r[11] + ' ' + (r[5] ? cats[r[5]][4] : '')).toLowerCase().includes(q)));
+  const f = keys[sortK];
+  out = out.slice().sort((a, b) => { const x = f(a), y = f(b);
+    const c = typeof x === 'number' ? x - y : String(x).localeCompare(String(y), 'he'); return (c || a[0] - b[0]) * (c ? dir : 1); });
+  const cc = (r, n, c) => { const k = r[5] && lvl(r[5], n); if (!k) return `<td data-c="${c}" class="cls${fcls('e', r[0], c)}"></td>`; const x = cats[k];
+    return `<td data-c="${c}" class="cls${fcls('e', r[0], c)}" title="${esc(k + ' · ' + x[4])}"><span style="background:${x[1]};color:${x[2]}">${esc(x[0])}</span></td>`; };
+  $('tb').innerHTML = out.map(r => `<tr data-r="${r[0]}"${rowcls('e', r[0], r[12] ? 'hl' : '')}>` + td('e', r[0], 0, 'n', r[0]) +
+    td('e', r[0], 1, 'he entry', esc(r[1]) + (r[2] ? `<small>${esc(r[2])}</small>` : '')) + td('e', r[0], 2, 'type', r[4]) +
+    cc(r, 1, 3) + cc(r, 2, 4) + cc(r, 3, 5) + td('e', r[0], 6, 'conf ' + r[6], r[6]) + td('e', r[0], 7, 'n', r[7] || '') + td('e', r[0], 8, 'n', r[8] || '') +
+    td('e', r[0], 9, 'he', esc(r[3])) + td('e', r[0], 10, 'refs', esc(r[9])) + td('e', r[0], 11, 'he refs', esc(r[10])) + td('e', r[0], 12, 'note', esc(r[11])) + '</tr>').join('');
+  $('count').textContent = `${out.length.toLocaleString('en-US')} of ${rows.length.toLocaleString('en-US')} entries`;
+  document.querySelectorAll('table[data-t=e] thead th[data-k]').forEach(th => {
+    if (th.dataset.k === sortK) th.setAttribute('aria-sort', dir > 0 ? 'ascending' : 'descending'); else th.removeAttribute('aria-sort'); });
+}
+// list row: n, shelfmark, type code, type en, type he, subgroup, description, page, date stated, date pgp, date inferred, place stated, place pgp, place inferred, entries, refs, pgp url, pgp description, sort year
+const lkeys = { no: l => l[0], sm: l => l[1], ltype: l => l[2], page: l => l[7], year: l => l[18] || 9999, lents: l => l[14], lrefs: l => l[15] };
+function viewLists() {
+  const q = $('q').value.trim().toLowerCase();
+  let out = lists.filter(l => !q || l.join(' ').toLowerCase().includes(q));
+  const f = lkeys[lsortK];
+  out = out.slice().sort((a, b) => { const x = f(a), y = f(b);
+    const c = typeof x === 'number' ? x - y : String(x).localeCompare(String(y)); return (c || a[0] - b[0]) * (c ? ldir : 1); });
+  $('tbl').innerHTML = out.map(l => `<tr data-r="${l[0]}"${rowcls('l', l[0], '')}>` + td('l', l[0], 0, 'n', l[0]) +
+    td('l', l[0], 1, 'sm', l[16] ? `<a href="${esc(l[16])}" target="_blank" rel="noopener">${esc(l[1])}</a>` : esc(l[1])) +
+    td('l', l[0], 2, 'type', esc(l[2] + '. ' + l[3]), l[4]) + td('l', l[0], 3, 'he desc', esc(l[6]) + (l[5] ? `<small>${esc(l[5])}</small>` : '')) +
+    td('l', l[0], 4, 'n', l[7]) + td('l', l[0], 5, 'date', esc(l[8])) + td('l', l[0], 6, 'date', esc(l[9])) + td('l', l[0], 7, 'date', esc(l[10])) +
+    td('l', l[0], 8, 'place', esc(l[11])) + td('l', l[0], 9, 'place', esc(l[12])) + td('l', l[0], 10, 'place', esc(l[13])) +
+    td('l', l[0], 11, 'n', l[14]) + td('l', l[0], 12, 'n', l[15]) + td('l', l[0], 13, 'pgp', esc(l[17])) + '</tr>').join('');
+  $('count').textContent = `${out.length} of ${lists.length} lists`;
+  document.querySelectorAll('table[data-t=l] thead th[data-k]').forEach(th => {
+    if (th.dataset.k === lsortK) th.setAttribute('aria-sort', ldir > 0 ? 'ascending' : 'descending'); else th.removeAttribute('aria-sort'); });
+}
+function view() { if (tab === 'e') viewEntries(); else if (tab === 'l') viewLists(); }
+document.querySelectorAll('table[data-t=e] thead th[data-k] button').forEach(b => b.addEventListener('click', () => {
+  const k = b.parentElement.dataset.k; if (k === sortK) dir = -dir; else { sortK = k; dir = 1; }
+  view(); $('wrap-entries').scrollTop = 0; }));
+document.querySelectorAll('table[data-t=l] thead th[data-k] button').forEach(b => b.addEventListener('click', () => {
+  const k = b.parentElement.dataset.k; if (k === lsortK) ldir = -ldir; else { lsortK = k; ldir = 1; }
+  view(); $('wrap-lists').scrollTop = 0; }));
+['q', 'type', 'conf'].forEach(id => $(id).addEventListener('input', view));
+$('classed').addEventListener('click', e => { onlyClassed = !onlyClassed; e.currentTarget.setAttribute('aria-pressed', onlyClassed); view(); });
+let howWanted = null;
+function setTab(t) { tab = t; $('wrap-overview').hidden = t !== 'o'; $('wrap-talmud').hidden = t !== 't'; $('wrap-entries').hidden = t !== 'e'; $('wrap-lists').hidden = t !== 'l';
+  [['o', 'tab-overview'], ['t', 'tab-talmud'], ['e', 'tab-entries'], ['l', 'tab-lists']].forEach(([k, id]) => $(id).setAttribute('aria-selected', t === k));
+  const chart = t === 'o' || t === 't';
+  document.querySelectorAll('.eonly').forEach(el => { el.hidden = t !== 'e'; }); document.querySelectorAll('.tonly').forEach(el => { el.hidden = chart; });
+  how.hidden = !(t === 'e' && howWanted); howbtn.setAttribute('aria-pressed', !how.hidden);
+  $('detail').hidden = true; document.querySelectorAll('.mini.sel').forEach(el => el.classList.remove('sel'));
+  view(); }
+$('tab-talmud').addEventListener('click', () => setTab('t')); $('tab-overview').addEventListener('click', () => setTab('o')); $('tab-entries').addEventListener('click', () => setTab('e')); $('tab-lists').addEventListener('click', () => setTab('l'));
+const how = $('how'), howbtn = $('howbtn');
+function setHow(open, save) { howWanted = open; how.hidden = !open; howbtn.setAttribute('aria-pressed', open);
+  if (save) { try { localStorage.setItem('howOpen', open ? '1' : '0'); } catch (e) {} } }
+let saved = null; try { saved = localStorage.getItem('howOpen'); } catch (e) {}
+howbtn.addEventListener('click', () => setHow(how.hidden, true));
+$('howclose').addEventListener('click', () => { setHow(false, true); howbtn.focus(); });
+howWanted = saved === null ? window.innerWidth >= 1100 : saved === '1';
+// ---- overviews: all fields (first tier) and Talmud-related sub-fields
+const NS = 'http://www.w3.org/2000/svg';
+const tcodes = ['3.1', '3.2', '3.3', '3.4', '3.5', '3.6', '3.7', '4.1', '4.2', '4.3', '4.4.1', '4.4.2', '4.4.3', '4.4.4', '4.4.5', '4.4.6', '4.4.7', '4.4.8', '4.5', '4.6', '4.7', '4.8', '4.9'];
+const SC = {
+  o: { codes: D.fgp.map(f => f[0]), cat: code => code.split('.')[0], ids: { allu: 'alluvial', key: 'key', minis: 'minis', sel: 'fgpm' }, right: 'Allony book lists', what: 'classed works and authors' },
+  t: { codes: tcodes, cat: code => { const q = code.split('.'); if (q[0] !== '3' && q[0] !== '4') return null; if (code === '3') return '3.7'; if (code === '4') return '4.9';
+        if (q[0] === '4' && q[1] === '4') return q.length >= 3 ? code : '4.4.8'; return q.slice(0, 2).join('.'); },
+       ids: { allu: 'alluvial-t', key: 'key-t', minis: 'minis-t', sel: 'fgpm-t' }, right: 'Allony book lists, Talmud and halakha', what: 'works of rabbinic and halakhic literature' } };
+const strip = n => n.replace(/\s*\(.*\)$/, '');
+const nameOf = c => { const x = cats[c]; if (!x[0].startsWith('לא הוגדר')) return strip(x[0]); const par = c.split('.').slice(0, -1).join('.'); return strip(cats[par][0]) + ' · לא הוגדר'; };
+const listIndex = {};
+rows.forEach(r => { if (!r[5] || !r[9]) return; r[9].split('; ').forEach(seg => { const m = /^(\d+): (.*)$/.exec(seg); if (!m) return;
+  const lines = m[2].replace(/\([^)]*\)/g, '').match(/\d+(?:-\d+)?/g) || []; (listIndex[m[1]] = listIndex[m[1]] || []).push({ r, text: m[2], n: lines.length, first: parseInt(lines[0] || '0', 10) }); }); });
+function countsFor(sc) { const out = {}; for (const no in listIndex) { if (Number(no) > 114) continue; const o = out[no] = {}; listIndex[no].forEach(x => { const c = sc.cat(x.r[5]); if (c) o[c] = (o[c] || 0) + x.n; }); } return out; }
+SC.o.lf = countsFor(SC.o); SC.t.lf = countsFor(SC.t);
+function pie(host, sc, vals, listNo, scName) { const codes = sc.codes, tot = codes.reduce((a, c) => a + (vals[c] || 0), 0);
+  const svg = document.createElementNS(NS, 'svg'); svg.setAttribute('viewBox', '0 0 200 200'); svg.setAttribute('role', 'img');
+  host.textContent = ''; host.appendChild(svg);
+  if (!tot) { const c = document.createElementNS(NS, 'circle'); c.setAttribute('cx', 100); c.setAttribute('cy', 100); c.setAttribute('r', 96); c.setAttribute('fill', 'none'); c.setAttribute('stroke', 'var(--rule)'); c.setAttribute('stroke-dasharray', '4 4'); svg.appendChild(c); return 0; }
+  let a = 0; codes.forEach(code => { const v = vals[code] || 0; if (!v) return; const fr = v / tot, a0 = a, a1 = a + fr * Math.PI * 2; a = a1; const x = cats[code];
+    const P = (r, t) => (100 + r * Math.sin(t)).toFixed(2) + ' ' + (100 - r * Math.cos(t)).toFixed(2);
+    const el = document.createElementNS(NS, fr > 0.9999 ? 'circle' : 'path');
+    if (fr > 0.9999) { el.setAttribute('cx', 100); el.setAttribute('cy', 100); el.setAttribute('r', 96); }
+    else el.setAttribute('d', `M100 100L${P(96, a0)}A96 96 0 ${fr > 0.5 ? 1 : 0} 1 ${P(96, a1)}Z`);
+    el.setAttribute('fill', x[1]); el.setAttribute('stroke', 'var(--sheet)'); el.setAttribute('stroke-width', 0.8);
+    el.dataset.tip = `${nameOf(code)}: ${v.toLocaleString('en-US')} (${(fr * 100).toFixed(1)}%)`; el.dataset.list = listNo; el.dataset.code = code; el.dataset.sc = scName; svg.appendChild(el); });
+  return tot; }
+function alluvial(host, sc, fv, ft, av, at, unit) { const codes = sc.codes, W = 880, y0 = 44, H = 540, gap = 2, xl = 310, xr = 560, bw = 18, n = codes.length, usable = H - gap * (n - 1);
+  const svg = document.createElementNS(NS, 'svg'); svg.setAttribute('viewBox', `0 0 ${W} ${y0 + H + 12}`); svg.setAttribute('role', 'img'); svg.setAttribute('aria-label', 'Shares in the Friedberg Genizah Project and in the Allony book lists');
+  host.textContent = ''; host.appendChild(svg);
+  const add = (tag, attrs, text) => { const el = document.createElementNS(NS, tag); for (const k in attrs) el.setAttribute(k, attrs[k]); if (text !== undefined) el.textContent = text; svg.appendChild(el); return el; };
+  add('text', { x: xl + bw, y: 16, 'text-anchor': 'end', 'font-size': 12.5, 'font-weight': 600, fill: 'var(--ink)' }, 'Friedberg Genizah Project');
+  add('text', { x: xl + bw, y: 32, 'text-anchor': 'end', 'font-size': 11, fill: 'var(--muted)' }, `${ft.toLocaleString('en-US')} ${unit}`);
+  add('text', { x: xr, y: 16, 'font-size': 12.5, 'font-weight': 600, fill: 'var(--ink)' }, sc.right);
+  add('text', { x: xr, y: 32, 'font-size': 11, fill: 'var(--muted)' }, `${at.toLocaleString('en-US')} mentions`);
+  let yl = y0, yr = y0; const segs = codes.map(c => { const fl = ft ? (fv[c] || 0) / ft : 0, fr = at ? (av[c] || 0) / at : 0, hl = fl * usable, hr = fr * usable;
+    const o = { c, fl, fr, vl: fv[c] || 0, vr: av[c] || 0, l0: yl, l1: yl + hl, r0: yr, r1: yr + hr }; yl += hl + gap; yr += hr + gap; return o; });
+  const pct = f => (f * 100).toFixed(1) + '%', mx = (xl + bw + xr) / 2, num = v => v.toLocaleString('en-US'), tipOf = o => `${cats[o.c][4]}: Friedberg ${num(o.vl)} (${pct(o.fl)}), book lists ${num(o.vr)} (${pct(o.fr)})`;
+  segs.forEach(o => { const x = cats[o.c];
+    add('path', { d: `M${xl + bw} ${o.l0}C${mx} ${o.l0} ${mx} ${o.r0} ${xr} ${o.r0}L${xr} ${o.r1}C${mx} ${o.r1} ${mx} ${o.l1} ${xl + bw} ${o.l1}Z`, fill: x[1], 'fill-opacity': 0.42 }).dataset.tip = tipOf(o);
+    add('rect', { x: xl, y: o.l0, width: bw, height: Math.max(o.l1 - o.l0, 0.6), fill: x[1] }).dataset.tip = tipOf(o);
+    add('rect', { x: xr, y: o.r0, width: bw, height: Math.max(o.r1 - o.r0, 0.6), fill: x[1] }).dataset.tip = tipOf(o); });
+  const place = side => { let last = -99; segs.forEach(o => { const f = side === 'l' ? o.fl : o.fr; if (f < 0.018) return; const mid = side === 'l' ? (o.l0 + o.l1) / 2 : (o.r0 + o.r1) / 2;
+      const y = Math.max(mid + 4, last + 13); last = y;
+      if (side === 'l') { add('text', { x: xl - 8, y, 'text-anchor': 'end', 'font-size': 11.5, 'font-weight': 600, fill: 'var(--ink)' }, `${num(o.vl)} · ${pct(o.fl)}`);
+        add('text', { x: xl - 112, y, 'text-anchor': 'end', 'font-size': 11.5, fill: 'var(--ink)' }, nameOf(o.c)).dataset.tip = tipOf(o); }
+      else { add('text', { x: xr + bw + 8, y, 'font-size': 11.5, 'font-weight': 600, fill: 'var(--ink)' }, `${num(o.vr)} · ${pct(o.fr)}`);
+        add('text', { x: xr + bw + 104, y, 'font-size': 11.5, fill: 'var(--ink)', direction: 'rtl', 'text-anchor': 'end' }, nameOf(o.c)).dataset.tip = tipOf(o); } }); };
+  place('l'); place('r'); }
+// Friedberg value of a category: its own row, except halakha's residue rows which stand in for parents never used here
+function overview(scName) { const sc = SC[scName], mi = Number($(sc.ids.sel).value), fv = {}, av = {};
+  sc.codes.forEach(c => { fv[c] = cats[c][mi === 1 ? 5 : 6]; });
+  Object.values(sc.lf).forEach(o => { for (const c in o) av[c] = (av[c] || 0) + o[c]; });
+  const ft = sc.codes.reduce((a, c) => a + (fv[c] || 0), 0), at = sc.codes.reduce((a, c) => a + (av[c] || 0), 0);
+  alluvial($(sc.ids.allu), sc, fv, ft, av, at, mi === 1 ? 'shelf numbers' : 'units');
+  const key = $(sc.ids.key); key.textContent = ''; sc.codes.forEach(c => { const x = cats[c], tr = document.createElement('tr');
+    const n = document.createElement('td'), sw = document.createElement('span'), nm = document.createElement('span'); sw.className = 'sw'; sw.style.background = x[1]; nm.className = 'nm'; nm.textContent = scName === 'o' ? x[4] : nameOf(c); nm.title = x[4]; n.appendChild(sw); n.appendChild(nm); tr.appendChild(n);
+    [[fv[c] || 0, ft], [av[c] || 0, at]].forEach(([v, t]) => { const d = document.createElement('td'); d.className = 'num'; d.textContent = t ? `${v.toLocaleString('en-US')} · ${(v / t * 100).toFixed(1)}%` : ''; tr.appendChild(d); }); key.appendChild(tr); }); }
+function minis(scName) { const sc = SC[scName], host = $(sc.ids.minis); const groups = []; lists.forEach(l => { let g = groups.find(x => x.code === l[2]); if (!g) { g = { code: l[2], name: l[3], items: [] }; groups.push(g); } g.items.push(l); });
+  groups.forEach(g => { const h = document.createElement('h3'); h.textContent = `${g.code}. ${g.name} · lists ${g.items[0][0]}–${g.items[g.items.length - 1][0]}`; host.appendChild(h);
+    const grid = document.createElement('div'); grid.className = 'minis'; host.appendChild(grid);
+    g.items.forEach(l => { const fig = document.createElement('figure'); fig.className = 'mini'; const box = document.createElement('div'); fig.appendChild(box);
+      const n = pie(box, sc, sc.lf[l[0]] || {}, l[0], scName); const cap = document.createElement('figcaption'), btn = document.createElement('button'), b = document.createElement('b'), sp = document.createElement('span');
+      fig.dataset.list = l[0]; btn.type = 'button'; btn.dataset.list = l[0]; btn.dataset.code = ''; btn.dataset.sc = scName;
+      b.textContent = `${l[0]} · ${l[1]}`; sp.textContent = n ? `${n} mentions` : (scName === 'o' ? 'no classed works' : 'none in these fields'); btn.appendChild(b); btn.appendChild(sp); cap.appendChild(btn); fig.appendChild(cap); grid.appendChild(fig); }); }); }
+// ---- detail panel: the works behind one list's pie
+const detail = $('detail');
+function openDetail(no, code, scName) { const sc = SC[scName], l = lists.find(x => x[0] === no); if (!l) return;
+  const all = (listIndex[no] || []).filter(x => sc.cat(x.r[5])).sort((a, b) => a.first - b.first || a.r[0] - b.r[0]);
+  $('dtitle').textContent = `List ${l[0]} · ${l[1]}`;
+  const meta = $('dmeta'); meta.textContent = ''; const row = (k, v, he) => { if (!v) return; const dt = document.createElement('dt'), dd = document.createElement('dd'); dt.textContent = k; dd.textContent = v; if (he) dd.className = 'he'; meta.appendChild(dt); meta.appendChild(dd); };
+  row('Type', `${l[2]}. ${l[3]}`); row('In the book', [l[6], l[5]].filter(Boolean).join(' · '), true); row('Page', String(l[7]));
+  row('Date', [l[8] && l[8] + ' (book)', l[9] && l[9] + ' (Princeton)', l[10] && l[10] + ' (inferred)'].filter(Boolean).join('; '));
+  row('Place', [l[11] && l[11] + ' (book)', l[12] && l[12] + ' (Princeton)', l[13] && l[13] + ' (inferred)'].filter(Boolean).join('; '));
+  if (l[16]) { const dt = document.createElement('dt'), dd = document.createElement('dd'), a = document.createElement('a'); dt.textContent = 'Record'; a.href = l[16]; a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'Princeton Geniza Project'; a.style.color = 'var(--accent)'; dd.appendChild(a); meta.appendChild(dt); meta.appendChild(dd); }
+  const chips = $('dchips'); chips.textContent = ''; const tot = all.reduce((a, x) => a + x.n, 0);
+  const chip = (c, label, n, color) => { const b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-pressed', c === code);
+    if (color) { const i = document.createElement('i'); i.style.background = color; b.appendChild(i); } const t = document.createElement('bdi'); t.textContent = label; b.appendChild(t); b.appendChild(document.createTextNode(' ' + n));
+    b.addEventListener('click', () => openDetail(no, c, scName)); chips.appendChild(b); };
+  chip('', scName === 'o' ? 'All fields' : 'All Talmud and halakha', tot);
+  sc.codes.forEach(c => { const n = all.filter(x => sc.cat(x.r[5]) === c).reduce((a, x) => a + x.n, 0); if (n) chip(c, nameOf(c), n, cats[c][1]); });
+  const shown = code ? all.filter(x => sc.cat(x.r[5]) === code) : all, sn = shown.reduce((a, x) => a + x.n, 0);
+  $('dcount').textContent = `${shown.length} index ${shown.length === 1 ? 'entry' : 'entries'}, ${sn} ${sn === 1 ? 'mention' : 'mentions'}${code ? ' in ' + cats[code][4] : ''}. Classes are suggestions.`;
+  const ol = $('dlist'); ol.textContent = '';
+  shown.forEach(x => { const r = x.r, c = cats[r[5]], li = document.createElement('li');
+    const hw = document.createElement('div'); hw.className = 'hw'; hw.textContent = r[1]; if (r[2]) { const sm = document.createElement('small'); sm.textContent = r[2]; hw.appendChild(sm); } li.appendChild(hw);
+    const cl = document.createElement('div'), tag = document.createElement('span'); tag.className = 'cl'; tag.style.background = c[1]; tag.style.color = c[2]; tag.textContent = c[4]; tag.title = r[5]; cl.appendChild(tag); li.appendChild(cl);
+    const ln = document.createElement('div'); ln.className = 'ln'; ln.textContent = `${x.n > 1 ? 'lines' : 'line'} ${x.text} · entry ${r[0]} · ${r[4]}, confidence ${r[6]}`; li.appendChild(ln); ol.appendChild(li); });
+  document.querySelectorAll('.mini.sel').forEach(el => el.classList.remove('sel')); const fig = document.querySelector(`#${sc.ids.minis} .mini[data-list="${no}"]`); if (fig) fig.classList.add('sel');
+  detail.hidden = false; detail.scrollTop = 0; }
+const closeDetail = () => { detail.hidden = true; document.querySelectorAll('.mini.sel').forEach(el => el.classList.remove('sel')); };
+$('detailclose').addEventListener('click', closeDetail);
+const tip = $('tip');
+['o', 't'].forEach(k => { const sc = SC[k], wrap = $(k === 'o' ? 'wrap-overview' : 'wrap-talmud');
+  $(sc.ids.minis).addEventListener('click', e => { const t = e.target.closest('[data-list]'); if (!t || t.dataset.code === undefined) return; openDetail(Number(t.dataset.list), t.dataset.code || '', k); });
+  wrap.addEventListener('mousemove', e => { const t = e.target.dataset && e.target.dataset.tip; if (!t) { tip.hidden = true; return; } tip.textContent = t; tip.hidden = false;
+    tip.style.left = Math.min(window.innerWidth - tip.offsetWidth - 8, e.clientX + 12) + 'px'; tip.style.top = (e.clientY + 14) + 'px'; });
+  wrap.addEventListener('mouseleave', () => { tip.hidden = true; });
+  $(sc.ids.sel).addEventListener('change', () => overview(k)); overview(k); minis(k); });
+setTab('o');
+</script>
+</body>
+</html>
